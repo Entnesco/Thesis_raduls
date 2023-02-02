@@ -170,8 +170,8 @@ namespace raduls
 		__int64* dest = (__int64 *)_dest;
 		__int64* src = (__int64 *)_src;
 
-		//for (unsigned i = 0; i < size; ++i)			
-		//	_mm_stream_si64(dest + i, src[i]);	
+		for (unsigned i = 0; i < size; ++i)			
+			_mm_stream_si64(dest + i, src[i]);	
 	}
 
 	// 64bit copy function

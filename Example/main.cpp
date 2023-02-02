@@ -1,3 +1,13 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define _SCL_SECURE_NO_WARNINGS
+
+#ifdef _MSC_VER 
+#include <ppl.h>
+#elif __GNUG__
+#include <omp.h>
+#include <parallel/algorithm>
+#endif
+
 #include <iostream>
 #include <chrono>
 #include <random>
@@ -8,8 +18,8 @@ void sorting(uint64_t n_recs, uint32_t key_size);
 
 int main()
 {
-	uint64_t n_recs_min = 100000000;
-	uint64_t n_recs_max = 100000002; //rozmiar DS
+	uint64_t n_recs_min = 1000;
+	uint64_t n_recs_max = 1100; //rozmiar DS
 	uint32_t key_size = 8;
 
 	for (uint64_t n_recs = n_recs_min; n_recs < n_recs_max; n_recs++)
@@ -20,9 +30,9 @@ int main()
 
 bool is_sorted(unsigned __int64* input, uint64_t n_recs)
 {
-	for (uint64_t i = 0; i < n_recs-1; ++i)
+	for (uint64_t i = 0; i < n_recs - 1; ++i)
 	{
-		if (input[i] > input[i + 1]) 
+		if (input[i] > input[i + 1])
 		{
 			//std::cerr << input[i] << ":" << input[i+1];
 			return false;
