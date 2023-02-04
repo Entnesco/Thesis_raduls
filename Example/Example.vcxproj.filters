@@ -56,5 +56,8 @@
     <ClInclude Include="..\Raduls\defs.h">
       <Filter>Raduls\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="data_to_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

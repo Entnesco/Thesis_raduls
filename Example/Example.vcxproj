@@ -161,6 +161,7 @@
     <ClInclude Include="..\Raduls\small_sort.h" />
     <ClInclude Include="..\Raduls\sorting_network.h" />
     <ClInclude Include="..\Raduls\defs.h" />
+    <ClInclude Include="data_to_file.h" />
     <ClInclude Include="Opt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
