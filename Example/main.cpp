@@ -20,30 +20,37 @@ double sorting(uint64_t n_recs, uint32_t key_size, unsigned int num_threads);
 
 int main()
 {
-	unsigned int num_threads = 10;/*std::thread::hardware_concurrency();*/
-	unsigned int testite = 10;
+	//unsigned int num_threads = 6;/*std::thread::hardware_concurrency();*/
+	unsigned int num_threads_min = 1;
+	unsigned int num_threads_max = std::thread::hardware_concurrency();
+	unsigned int num_threads_step = 1;
+	unsigned int testite = 5;
 	uint64_t n_recs_min = 100;
-	uint64_t n_recs_max = 100000000; //rozmiar DS
-	uint64_t n_recs_step = 10;
+	uint64_t n_recs_max = 104857600; //rozmiar DS
+	uint64_t n_recs_mult = 2;
+	uint64_t n_recs_step = 0;
 	uint32_t key_size = 8;
 
 	double time, sumResults;
-
-	string test_type = "Raduls_sort;lengthmin=" + to_string(n_recs_min) + ";lengthmax=" + to_string(n_recs_max) + ";lengtstep=" + to_string(n_recs_step) + ";num_threads=" + to_string(num_threads) + ";testite=" + to_string(testite);
-	string path = "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/part_2/";
-	save_data(test_type, "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/Result.txt");
-	save_data("seconds  length", "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/Result.txt");
-
-	for (uint64_t n_recs = n_recs_min; n_recs <= n_recs_max; n_recs=n_recs*n_recs_step)
+	for (unsigned int num_threads = num_threads_min; num_threads <= num_threads_max; num_threads+= num_threads_step)
 	{
-		sumResults = 0;
-		for (int testi = 0; testi < testite; testi++)
+		string test_type = "Raduls_sort;lengthmin=" + to_string(n_recs_min) + ";lengthmax=" + to_string(n_recs_max) + ";lengtstep=" + to_string(n_recs_step) + ";lengtmult=" + to_string(n_recs_mult) + ";num_threads=" + to_string(num_threads) + ";testite=" + to_string(testite);
+		string path = "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/part_2/";
+		save_data(test_type, "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/Result.txt");
+		save_data("seconds  length", "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/Result.txt");
+
+		for (uint64_t n_recs = n_recs_min; n_recs <= n_recs_max; n_recs = n_recs * n_recs_mult + n_recs_step)
 		{
-			time = sorting(n_recs, key_size, num_threads);
-			sumResults += time;
-			save_data(to_string(time), path + test_type + ";n_recs=" + to_string(n_recs) + ".txt");
+			sumResults = 0;
+			for (int testi = 0; testi < testite; testi++)
+			{
+				time = sorting(n_recs, key_size, num_threads);
+				sumResults += time;
+				save_data(to_string(time), path + test_type + ";n_recs=" + to_string(n_recs) + ".txt");
+			}
+			save_data(to_string(sumResults / testite) + " " + to_string(n_recs), "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/Result.txt");
+			std::cerr << "Threads count: " << num_threads << " Length: " << n_recs << std::endl;
 		}
-		save_data(to_string(sumResults / testite) + " " + to_string(n_recs), "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/Result.txt");
 
 	}
 }
@@ -89,7 +96,7 @@ double sorting(uint64_t n_recs, uint32_t key_size, unsigned int num_threads)
 
 	//koniec pomiaru czasu oraz jego wyœwietlenie
 	double time = std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - start).count();
-	std::cerr << "Time: " << time << "\n";
+	/*std::cerr << "Time: " << time << "\n";*/
 
 	//posortowana tablica
 	auto result = key_size % 2 ? tmp : input;
