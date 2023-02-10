@@ -21,12 +21,12 @@ double sorting(uint64_t n_recs, uint32_t key_size, unsigned int num_threads);
 int main()
 {
 	//unsigned int num_threads = 6;/*std::thread::hardware_concurrency();*/
-	unsigned int num_threads_min = 1;
-	unsigned int num_threads_max = std::thread::hardware_concurrency();
+	unsigned int num_threads_min = 12;
+	unsigned int num_threads_max = 12;/*std::thread::hardware_concurrency();*/
 	unsigned int num_threads_step = 1;
-	unsigned int testite = 5;
-	uint64_t n_recs_min = 100;
-	uint64_t n_recs_max = 104857600; //rozmiar DS
+	unsigned int testite = 1;
+	uint64_t n_recs_min = 400;
+	uint64_t n_recs_max = 1048576000; //rozmiar DS
 	uint64_t n_recs_mult = 2;
 	uint64_t n_recs_step = 0;
 	uint32_t key_size = 8;
@@ -49,7 +49,7 @@ int main()
 				save_data(to_string(time), path + test_type + ";n_recs=" + to_string(n_recs) + ".txt");
 			}
 			save_data(to_string(sumResults / testite) + " " + to_string(n_recs), "C://Users/Michal/Desktop/Studia/RADULS-master_my/Result_files/Result.txt");
-			std::cerr << "Threads count: " << num_threads << " Length: " << n_recs << std::endl;
+			/*std::cerr << "Threads count: " << num_threads << " Length: " << n_recs << std::endl;*/
 		}
 
 	}
@@ -96,7 +96,7 @@ double sorting(uint64_t n_recs, uint32_t key_size, unsigned int num_threads)
 
 	//koniec pomiaru czasu oraz jego wyœwietlenie
 	double time = std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - start).count();
-	/*std::cerr << "Time: " << time << "\n";*/
+	std::cerr << "Time: " << time << "\n";
 
 	//posortowana tablica
 	auto result = key_size % 2 ? tmp : input;
