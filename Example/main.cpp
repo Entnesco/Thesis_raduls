@@ -25,10 +25,10 @@ int main()
 	unsigned int num_threads_max = 12;/*std::thread::hardware_concurrency();*/
 	unsigned int num_threads_step = 1;
 	unsigned int testite = 1;
-	uint64_t n_recs_min = 400;
-	uint64_t n_recs_max = 1048576000; //rozmiar DS
-	uint64_t n_recs_mult = 2;
-	uint64_t n_recs_step = 0;
+	uint64_t n_recs_min = 16777216; //2^14; 16 384
+	uint64_t n_recs_max = 536870912; // 2^29; 536 870 912; rozmiar DS
+	uint64_t n_recs_mult = 1;
+	uint64_t n_recs_step = 16777216; //16 777 216; 32
 	uint32_t key_size = 8;
 
 	double time, sumResults;
